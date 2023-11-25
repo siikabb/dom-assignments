@@ -20,14 +20,29 @@ if (navigator.userAgentData) {
   );
 } else {
   console.log(window.navigator.userAgent);
-  p.insertAdjacentText('beforeend', window.navigator.userAgent);
+  p.insertAdjacentHTML('beforeend', window.navigator.userAgent + '<br>');
 }
+
+p.insertAdjacentHTML('beforeend', `${screen.width} x ${screen.height}<br>`);
+p.insertAdjacentHTML(
+  'beforeend',
+  `${screen.availWidth} x ${screen.availHeight}<br>`
+);
+
+const d = new Date();
+const options = {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+};
+console.log(d.toLocaleDateString('fi-FI', options));
 
 p.insertAdjacentHTML(
   'beforeend',
-  `${document.querySelector('html').clientWidth} x ${
-    document.querySelector('html').clientHeight
-  }`
+  `${d.toLocaleDateString('fi-FI', options)} ${d.toLocaleTimeString('fi-FI', {
+    hour: '2-digit',
+    minute: '2-digit',
+  })}<br>`
 );
 
 target.appendChild(p);
