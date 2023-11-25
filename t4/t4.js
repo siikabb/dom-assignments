@@ -771,3 +771,51 @@ const restaurants = [
 ];
 
 // your code here
+// euclidean distance formula: Distance = √((x2 - x1)^2 + (y2 - y1)^2)
+const options = {
+  enableHighAccuracy: true,
+  timeout: 5000,
+  maximumAge: 0,
+};
+
+navigator.geolocation.getCurrentPosition(
+  pos => {
+    // console.log('enter getCurrentPosition');
+    const lat = pos.coords.latitude;
+    const lon = pos.coords.longitude;
+    // console.log(lat);
+
+    // for (const restaurant of restaurants) {
+    restaurants.sort((a, b) => {
+      // console.log(restaurant.location.coordinates[0]);
+      const aLat = a.location.coordinates[1];
+      const aLon = a.location.coordinates[0];
+      const aDistance = Math.sqrt((aLat - lat) ** 2 + (aLon - lon) ** 2);
+
+      const bLat = b.location.coordinates[1];
+      const bLon = b.location.coordinates[0];
+      const bDistance = Math.sqrt((bLat - lat) ** 2 + (bLon - lon) ** 2);
+      // console.log(distance);
+      return aDistance - bDistance;
+    });
+
+    const table = document.querySelector('table');
+    for (const restaurant of restaurants) {
+      const tr = document.createElement('tr');
+      const nametd = document.createElement('td');
+      const addresstd = document.createElement('td');
+
+      nametd.innerText = restaurant.name;
+      addresstd.innerText = restaurant.address;
+
+      tr.appendChild(nametd);
+      tr.appendChild(addresstd);
+
+      table.appendChild(tr);
+    }
+    // console.log(restaurants);
+    // console.log('exit getCurrentPosition');
+  },
+  console.log('error in getting location'),
+  options
+);
