@@ -1,3 +1,5 @@
+'use strict';
+
 // array for todo list
 const todoList = [
   {
@@ -27,23 +29,18 @@ const todoList = [
   },
 ];
 
-// add your code here
 const ul = document.querySelector('ul');
 
 for (const item of todoList) {
-  const li = document.createElement('li');
-  const input = document.createElement('input');
-  input.type = 'checkbox';
-  input.id = `todo-${item.id}`;
-  const label = document.createElement('label');
-  label.for = `todo-${item.id}`;
-  label.innerText = item.task;
-
   if (item.completed) {
-    input.checked = true;
+    ul.insertAdjacentHTML(
+      'beforeend',
+      `<li><input type="checkbox" id="todo-${item.id}" checked><label for="todo-${item.id}">${item.task}</label></li>`
+    );
+  } else {
+    ul.insertAdjacentHTML(
+      'beforeend',
+      `<li><input type="checkbox" id="todo-${item.id}"><label for="todo-${item.id}">${item.task}</label></li>`
+    );
   }
-  li.appendChild(input);
-  li.appendChild(label);
-
-  ul.appendChild(li);
 }
